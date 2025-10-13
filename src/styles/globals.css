@@ -1,0 +1,293 @@
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Stats grid - smaller size */
+.stats-grid-container-small .bento-section {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 0.75rem !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+.stats-grid-container-small .card-responsive {
+  display: contents !important;
+}
+
+.stats-grid-container-small .card {
+  backdrop-filter: blur(20px) !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  aspect-ratio: auto !important;
+  min-height: auto !important;
+  padding: 1rem 0.75rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  margin: 0 !important;
+  position: relative;
+  z-index: 1;
+}
+
+.dark .stats-grid-container-small .card {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Text colors for all MagicBento cards - NO TRANSITION */
+.stats-grid-container-small .card .card__content,
+.content-grid-container .card .card__content {
+  color: rgb(17, 24, 39) !important;
+  transition: none !important;
+}
+
+.dark .stats-grid-container-small .card .card__content,
+.dark .content-grid-container .card .card__content {
+  color: rgb(255, 255, 255) !important;
+  transition: none !important;
+}
+
+.stats-grid-container-small .card .card__description,
+.content-grid-container .card .card__description {
+  color: rgb(55, 65, 81) !important;
+  opacity: 0.9 !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  transition: none !important;
+}
+
+.dark .stats-grid-container-small .card .card__description,
+.dark .content-grid-container .card .card__description {
+  color: rgb(229, 231, 235) !important;
+  opacity: 0.9 !important;
+  transition: none !important;
+}
+
+.content-grid-container .bento-section {
+  padding: 0 !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+  margin: 0 !important;
+}
+
+/* Full width single card */
+.content-grid-container
+  .bento-section:has(.card-responsive:only-child)
+  .card-responsive {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 1rem !important;
+  padding: 0 !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+/* Two cards in same row (Education & Languages) */
+.content-grid-container
+  .bento-section:has(.card-responsive > :nth-child(2))
+  .card-responsive {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 1rem !important;
+  padding: 0 !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+@media (min-width: 768px) {
+  .content-grid-container
+    .bento-section:has(.card-responsive > :nth-child(2))
+    .card-responsive {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Four cards grid (Skills) */
+.content-grid-container
+  .bento-section:has(.card-responsive > :nth-child(4))
+  .card-responsive {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 1rem !important;
+  padding: 0 !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+@media (min-width: 768px) {
+  .content-grid-container
+    .bento-section:has(.card-responsive > :nth-child(4))
+    .card-responsive {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+.content-grid-container .card {
+  backdrop-filter: blur(20px) !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  aspect-ratio: auto !important;
+  min-height: auto !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  margin: 0 !important;
+  position: relative;
+  z-index: 1;
+}
+
+.dark .content-grid-container .card {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Card content alignment */
+.card__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+  height: 100% !important;
+}
+
+/* Consistent text styling for cards - NO TRANSITION */
+.card__title {
+  font-weight: 600 !important;
+  font-size: 1.1rem !important;
+  margin-bottom: 0.75rem !important;
+  line-height: 1.4 !important;
+  text-align: left !important;
+  transition: none !important;
+}
+
+.card__description {
+  font-weight: 500 !important;
+  line-height: 1.5 !important;
+  font-size: 0.95rem !important;
+  opacity: 0.9 !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+  transition: none !important;
+}
+
+/* Hover effects with proper spacing to prevent clipping */
+.stats-grid-container-small .card,
+.content-grid-container .card {
+  transition: background 0.3s ease, border 0.3s ease, transform 0.3s ease !important;
+  transform-origin: center;
+}
+
+.stats-grid-container-small .card:hover,
+.content-grid-container .card:hover {
+  border-color: rgba(59, 130, 246, 0.8) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15), 0 0 30px rgba(59, 130, 246, 0.4) !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  z-index: 10 !important;
+}
+
+.dark .stats-grid-container-small .card:hover,
+.dark .content-grid-container .card:hover {
+  border-color: rgba(139, 92, 246, 0.8) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25), 0 0 30px rgba(139, 92, 246, 0.4) !important;
+}
+
+/* Add proper spacing to prevent hover clipping */
+.stats-grid-container-small,
+.content-grid-container {
+  overflow: visible;
+}
+
+.bento-section {
+  overflow: visible !important;
+  position: relative;
+}
+
+.card {
+  overflow: visible !important;
+  border-radius: 16px !important;
+  transition: background 0.3s ease, border 0.3s ease !important;
+}
+
+.card--border-glow::after {
+  border-radius: 16px !important;
+}
+
+/* Avatar border improvements */
+.relative.w-20.h-20 img {
+  border-radius: 16px !important;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 767px) {
+  .stats-grid-container-small .bento-section {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+
+  .stats-grid-container-small .card {
+    padding: 0.75rem 0.5rem !important;
+  }
+
+  .content-grid-container
+    .bento-section:has(.card-responsive > :nth-child(2))
+    .card-responsive,
+  .content-grid-container
+    .bento-section:has(.card-responsive > :nth-child(4))
+    .card-responsive {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Desktop scrolling for columns - REMOVED */
+@media (min-width: 768px) {
+  .md\\:col-span-3 {
+    height: 100%;
+  }
+
+  main {
+    overflow-y: hidden !important;
+  }
+}
+
+/* Main container for mobile - ENABLE scroll */
+@media (max-width: 767px) {
+  main {
+    height: 100vh !important;
+    overflow-y: auto !important;
+    align-items: flex-start !important;
+  }
+
+  main > div {
+    height: auto !important;
+    min-height: 100% !important;
+  }
+}
+
+/* Fix for consistent flag display across devices */
+.flag-emoji {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+    "Android Emoji", "EmojiSymbols", "EmojiOne Mozilla", "Twemoji Mozilla",
+    "Segoe UI Symbol", sans-serif;
+  font-size: 1.2em;
+  line-height: 1;
+  display: inline-block;
+}
+
+/* Remove text color transitions globally */
+.text-gray-900,
+.text-gray-700,
+.text-gray-600,
+.text-gray-800,
+.text-gray-300,
+.text-gray-400,
+.dark\\:text-white,
+.dark\\:text-gray-300,
+.dark\\:text-gray-400,
+.text-blue-600,
+.dark\\:text-blue-400,
+.bg-clip-text {
+  transition: none !important;
+}
