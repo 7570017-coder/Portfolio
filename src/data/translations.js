@@ -342,9 +342,9 @@ export const translations = {
 };
 
 export const languageOptions = [
-  { code: "en", name: "English", flag: "🇺🇸" },
-  { code: "de", name: "Deutsch", flag: "🇩🇪" },
-  { code: "ru", name: "Русский", flag: "🇷🇺" },
-  { code: "uk", name: "Українська", flag: "🇺🇦" },
-  { code: "vi", name: "Tiếng Việt", flag: "🇻🇳" },
+  { code: "en", name: "English", flag: "US" },
+  { code: "de", name: "Deutsch", flag: "DE" },
+  { code: "ru", name: "Русский", flag: "RU" },
+  { code: "uk", name: "Українська", flag: "UA" },
+  { code: "vi", name: "Tiếng Việt", flag: "VN" },
 ];
