@@ -6,7 +6,7 @@ import MagicBento from "../UI/MagicBento";
 
 function LeftPanel({ animation, isDark, onSectionChange, t }) {
   const socialLinks = [
-    { icon: Github, href: "https://github.com", label: "GitHub" },
+    { icon: Github, href: "https://github.com/7570017-coder", label: "GitHub" },
     {
       icon: Linkedin,
       href: "https://www.linkedin.com/in/khanh-vo-92508b388",

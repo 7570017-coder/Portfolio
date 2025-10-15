@@ -6,6 +6,59 @@
   scrollbar-width: none;
 }
 
+/* Floating animation for interactive dots */
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(15px, -20px) scale(1.1);
+  }
+  50% {
+    transform: translate(-10px, -35px) scale(0.95);
+  }
+  75% {
+    transform: translate(-20px, -15px) scale(1.05);
+  }
+}
+
+.animate-float {
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  transition: all 0.2s ease-out;
+  pointer-events: auto;
+}
+
+.animate-float:hover {
+  animation-play-state: paused;
+  transform: scale(2) !important;
+  filter: brightness(1.5) drop-shadow(0 0 10px currentColor);
+  z-index: 100;
+}
+
+.animate-float:active {
+  transform: scale(0.5) !important;
+  transition: all 0.1s ease-out;
+}
+
+/* Wave gradient colors for light mode */
+.wave-start-light {
+  stop-color: rgb(167, 139, 250);
+}
+
+.wave-end-light {
+  stop-color: rgb(236, 72, 153);
+}
+
+:root.dark .wave-start-light {
+  stop-color: rgb(139, 92, 246);
+}
+
+:root.dark .wave-end-light {
+  stop-color: rgb(219, 39, 119);
+}
+
 /* Stats grid - smaller size */
 .stats-grid-container-small .bento-section {
   display: grid !important;
