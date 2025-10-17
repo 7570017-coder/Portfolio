@@ -6,40 +6,33 @@
   scrollbar-width: none;
 }
 
-/* Floating animation for interactive dots */
-@keyframes float {
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Wiggle animation for dots returning to position */
+@keyframes wiggle {
   0%,
   100% {
-    transform: translate(0, 0) scale(1);
+    transform: translate(-50%, -50%) rotate(0deg);
   }
   25% {
-    transform: translate(15px, -20px) scale(1.1);
+    transform: translate(-50%, -50%) rotate(-5deg) scale(1.05);
   }
   50% {
-    transform: translate(-10px, -35px) scale(0.95);
+    transform: translate(-50%, -50%) rotate(5deg) scale(0.95);
   }
   75% {
-    transform: translate(-20px, -15px) scale(1.05);
+    transform: translate(-50%, -50%) rotate(-3deg) scale(1.02);
   }
 }
 
-.animate-float {
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  transition: all 0.2s ease-out;
-  pointer-events: auto;
-}
-
-.animate-float:hover {
-  animation-play-state: paused;
-  transform: scale(2) !important;
-  filter: brightness(1.5) drop-shadow(0 0 10px currentColor);
-  z-index: 100;
-}
-
-.animate-float:active {
-  transform: scale(0.5) !important;
-  transition: all 0.1s ease-out;
+.animate-wiggle {
+  animation: wiggle 0.5s ease-in-out infinite;
 }
 
 /* Wave gradient colors for light mode */
