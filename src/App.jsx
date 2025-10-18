@@ -21,113 +21,43 @@ function App() {
 
   // Initial dot positions (percentage-based)
   const initialDots = [
-    { id: 1, x: 20, y: 15, size: 3, color: "violet", duration: 6, delay: 0 },
-    { id: 2, x: 70, y: 25, size: 4, color: "fuchsia", duration: 7, delay: 1 },
-    { id: 3, x: 15, y: 45, size: 3.5, color: "cyan", duration: 8, delay: 2 },
-    { id: 4, x: 75, y: 60, size: 3, color: "rose", duration: 6.5, delay: 0.5 },
-    { id: 5, x: 35, y: 75, size: 4, color: "amber", duration: 7.5, delay: 1.5 },
-    {
-      id: 6,
-      x: 85,
-      y: 20,
-      size: 3.5,
-      color: "indigo",
-      duration: 5,
-      delay: 0.3,
-    },
-    {
-      id: 7,
-      x: 40,
-      y: 35,
-      size: 3,
-      color: "emerald",
-      duration: 5.5,
-      delay: 1.2,
-    },
-    { id: 8, x: 60, y: 55, size: 4, color: "pink", duration: 6, delay: 2.5 },
-    { id: 9, x: 25, y: 70, size: 3, color: "blue", duration: 5.8, delay: 0.8 },
-    { id: 10, x: 60, y: 30, size: 3, color: "purple", duration: 4, delay: 0.2 },
-    {
-      id: 11,
-      x: 80,
-      y: 50,
-      size: 3.5,
-      color: "teal",
-      duration: 4.5,
-      delay: 1.8,
-    },
-    {
-      id: 12,
-      x: 50,
-      y: 80,
-      size: 3,
-      color: "orange",
-      duration: 4.2,
-      delay: 2.2,
-    },
-    { id: 13, x: 65, y: 40, size: 4, color: "sky", duration: 4.8, delay: 1.5 },
-    { id: 14, x: 45, y: 10, size: 3, color: "lime", duration: 6.2, delay: 0.7 },
-    {
-      id: 15,
-      x: 55,
-      y: 65,
-      size: 3.5,
-      color: "red",
-      duration: 5.3,
-      delay: 1.9,
-    },
-    {
-      id: 16,
-      x: 60,
-      y: 85,
-      size: 3,
-      color: "yellow",
-      duration: 6.8,
-      delay: 2.3,
-    },
-    {
-      id: 17,
-      x: 50,
-      y: 12,
-      size: 4,
-      color: "green",
-      duration: 5.6,
-      delay: 1.1,
-    },
-    {
-      id: 18,
-      x: 8,
-      y: 48,
-      size: 3,
-      color: "violet",
-      duration: 7.2,
-      delay: 0.4,
-    },
-    {
-      id: 19,
-      x: 82,
-      y: 92,
-      size: 3.5,
-      color: "fuchsia",
-      duration: 4.9,
-      delay: 2.7,
-    },
+    { id: 1, x: 20, y: 15, size: 3, color: "violet" },
+    { id: 2, x: 70, y: 25, size: 4, color: "fuchsia" },
+    { id: 3, x: 15, y: 45, size: 3.5, color: "cyan" },
+    { id: 4, x: 75, y: 60, size: 3, color: "rose" },
+    { id: 5, x: 35, y: 75, size: 4, color: "amber" },
+    { id: 6, x: 85, y: 20, size: 3.5, color: "indigo" },
+    { id: 7, x: 40, y: 35, size: 3, color: "emerald" },
+    { id: 8, x: 60, y: 55, size: 4, color: "pink" },
+    { id: 9, x: 25, y: 70, size: 3, color: "blue" },
+    { id: 10, x: 60, y: 30, size: 3, color: "purple" },
+    { id: 11, x: 80, y: 50, size: 3.5, color: "teal" },
+    { id: 12, x: 50, y: 80, size: 3, color: "orange" },
+    { id: 13, x: 65, y: 40, size: 4, color: "sky" },
+    { id: 14, x: 45, y: 10, size: 3, color: "lime" },
+    { id: 15, x: 55, y: 65, size: 3.5, color: "red" },
+    { id: 16, x: 60, y: 85, size: 3, color: "yellow" },
+    { id: 17, x: 50, y: 12, size: 4, color: "green" },
+    { id: 18, x: 8, y: 48, size: 3, color: "violet" },
+    { id: 19, x: 82, y: 92, size: 3.5, color: "fuchsia" },
   ];
 
   useEffect(() => {
     setMounted(true);
     document.documentElement.classList.add("dark");
 
-    // Initialize dots with physics properties
     const initializedDots = initialDots.map((dot) => ({
       ...dot,
-      px: dot.x, // pixel position x
-      py: dot.y, // pixel position y
-      vx: 0, // velocity x
-      vy: 0, // velocity y
+      px: dot.x,
+      py: dot.y,
+      vx: 0,
+      vy: 0,
       isDragging: false,
       lastMoveTime: Date.now(),
       isReturning: false,
+      returnStyle: ["spring", "spiral", "bounce", "float", "pulse"][
+        Math.floor(Math.random() * 5)
+      ],
     }));
     setDots(initializedDots);
     dotsRef.current = initializedDots;
@@ -137,55 +67,96 @@ function App() {
   useEffect(() => {
     if (!mounted) return;
 
-    const gravity = 0.15;
+    const gravity = 0.08;
     const friction = 0.99;
-    const restitution = 0.7;
+    const restitution = 0.8;
     const bounceThreshold = 0.3;
-    const groundFriction = 0.95;
+    const groundFriction = 1;
     const returnSpeed = 0.05;
 
     const animate = () => {
       const now = Date.now();
       const updated = dotsRef.current.map((dot) => {
-        if (dot.isDragging) {
-          return dot;
-        }
-
+        if (dot.isDragging) return dot;
         let newDot = { ...dot };
-
-        // Check if dot should return to original position
         const timeSinceMove = now - dot.lastMoveTime;
-        if (timeSinceMove > 10000 && !dot.isReturning) {
+
+        if (timeSinceMove > 8000 && !dot.isReturning) {
           newDot.isReturning = true;
+          newDot.returnStyle = ["spring", "spiral", "bounce", "float", "pulse"][
+            Math.floor(Math.random() * 5)
+          ];
         }
 
         if (newDot.isReturning) {
-          // Smooth return with wiggle effect
           const dx = dot.x - dot.px;
           const dy = dot.y - dot.py;
           const distance = Math.sqrt(dx * dx + dy * dy);
+          const angle = Math.atan2(dy, dx);
 
           if (distance < 0.5) {
-            // Reached destination
             newDot.px = dot.x;
             newDot.py = dot.y;
             newDot.vx = 0;
             newDot.vy = 0;
             newDot.isReturning = false;
           } else {
-            // Move towards original position with spring effect
-            newDot.vx += dx * returnSpeed;
-            newDot.vy += dy * returnSpeed;
-            newDot.vx *= 0.9;
-            newDot.vy *= 0.9;
+            switch (newDot.returnStyle) {
+              case "spring": {
+                newDot.vx += dx * returnSpeed * 0.8; // was 1.2
+                newDot.vy += dy * returnSpeed * 0.8;
+                newDot.vx *= 0.9;
+                newDot.vy *= 0.9;
+                break;
+              }
 
-            // Add wiggle
-            const wiggle = Math.sin(now * 0.01 + dot.id) * 0.3;
-            newDot.px += newDot.vx + wiggle;
+              case "spiral": {
+                const spiralRadius = distance * 0.95; // was 0.97
+                const spiralAngle = angle + 0.15; // smaller angle = smoother swirl
+                newDot.px = dot.x - Math.cos(spiralAngle) * spiralRadius;
+                newDot.py = dot.y - Math.sin(spiralAngle) * spiralRadius;
+                break;
+              }
+
+              case "bounce": {
+                newDot.vx += dx * returnSpeed * 0.6; // was 0.8
+                newDot.vy +=
+                  dy * returnSpeed * 0.6 + Math.sin(now * 0.02) * 0.1; // half vertical boost
+                newDot.vx *= 0.92;
+                newDot.vy *= 0.92;
+                break;
+              }
+
+              case "float": {
+                newDot.vx += dx * returnSpeed * 0.4; // was 0.5
+                newDot.vy += dy * returnSpeed * 0.4;
+                newDot.py += Math.sin(now * 0.01 + dot.id) * 0.2; // gentler wobble
+                newDot.vx *= 0.96;
+                newDot.vy *= 0.96;
+                break;
+              }
+
+              case "pulse": {
+                const pulseForce =
+                  (Math.sin(now * 0.015 + dot.id) + 1) * 0.01 + returnSpeed; // halved
+                newDot.vx += dx * pulseForce;
+                newDot.vy += dy * pulseForce;
+                newDot.vx *= 0.9;
+                newDot.vy *= 0.9;
+                break;
+              }
+
+              default: {
+                newDot.vx += dx * returnSpeed;
+                newDot.vy += dy * returnSpeed;
+                break;
+              }
+            }
+
+            newDot.px += newDot.vx;
             newDot.py += newDot.vy;
           }
         } else {
-          // Apply physics (basketball-style)
           newDot.vy += gravity;
           newDot.vx *= friction;
           newDot.vy *= friction;
@@ -193,34 +164,26 @@ function App() {
           newDot.px += newDot.vx;
           newDot.py += newDot.vy;
 
-          // Boundary collision (viewport)
-          // Bottom collision
           if (newDot.py > 95) {
             newDot.py = 95;
             if (Math.abs(newDot.vy) < bounceThreshold) {
               newDot.vy = 0;
               newDot.vx *= groundFriction;
-              if (Math.abs(newDot.vx) < 0.1) {
-                newDot.vx = 0;
-              }
             } else {
               newDot.vy = -newDot.vy * restitution;
             }
           }
 
-          // Top collision
           if (newDot.py < 5) {
             newDot.py = 5;
             newDot.vy = -newDot.vy * restitution;
           }
 
-          // Right collision
           if (newDot.px > 95) {
             newDot.px = 95;
             newDot.vx = -newDot.vx * restitution;
           }
 
-          // Left collision
           if (newDot.px < 5) {
             newDot.px = 5;
             newDot.vx = -newDot.vx * restitution;
@@ -236,12 +199,7 @@ function App() {
     };
 
     animationFrameRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
+    return () => cancelAnimationFrame(animationFrameRef.current);
   }, [mounted]);
 
   const handleDotMouseDown = (e, dotId) => {
@@ -272,7 +230,6 @@ function App() {
 
       const x = (clientX / window.innerWidth) * 100;
       const y = (clientY / window.innerHeight) * 100;
-
       const now = Date.now();
       const dt = now - lastDragTime;
 
@@ -313,11 +270,6 @@ function App() {
     document.addEventListener("touchend", handleMouseUp);
   };
 
-  useEffect(() => {
-    setMounted(true);
-    document.documentElement.classList.add("dark");
-  }, []);
-
   const toggleTheme = () => {
     setIsDark(!isDark);
     document.documentElement.classList.toggle("dark");
@@ -356,7 +308,6 @@ function App() {
       transform: mounted ? "translateY(0px)" : "translateY(40px)",
     },
     config: { tension: 220, friction: 30 },
-    key: activeSection,
   });
 
   if (!mounted) {
@@ -399,7 +350,7 @@ function App() {
           style={{ animationDelay: "3s" }}
         />
 
-        <div className="absolute top-[10%] left-[5%] md:top-[17%] md:left-[12.5%] w-48 h-48 md:w-80 md:h-80">
+        <div className="absolute top-[10%] left-[5%] md:top-[17%] md:left-[12.5%] w-48 h-48 md:w-80 md:h-80 z-5">
           <div
             className="absolute inset-0 border-2 border-dashed border-fuchsia-400/40 dark:border-fuchsia-400/30 rounded-full animate-[spin_25s_linear_infinite]"
             style={{ strokeDasharray: "10 20" }}
@@ -420,7 +371,7 @@ function App() {
           </div>
         </div>
 
-        <div className="absolute bottom-[10%] right-[5%] md:bottom-[15%] md:right-[10%] w-40 h-40 md:w-72 md:h-72">
+        <div className="absolute bottom-[10%] right-[5%] md:bottom-[15%] md:right-[10%] w-40 h-40 md:w-72 md:h-72 z-5">
           <div className="absolute inset-0 animate-[spin_22s_linear_infinite]">
             <div className="absolute inset-0 border-2 border-dashed border-rose-400/40 dark:border-rose-400/30 rotate-45" />
           </div>
@@ -429,32 +380,129 @@ function App() {
           </div>
         </div>
 
-        {/* Physics-enabled Interactive Dots */}
-        <div className="absolute inset-0 z-10 pointer-events-none">
-          {dots.map((dot) => (
+        {/* Physics-enabled Interactive Dots - INLINE STYLES */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ zIndex: 9999 }}
+        >
+          {mounted && dots.length > 0 ? (
+            dots.map((dot) => {
+              // Define colors inline
+              const colors = {
+                violet: {
+                  light: "rgba(139, 92, 246, 0.7)",
+                  dark: "rgba(167, 139, 250, 0.5)",
+                },
+                fuchsia: {
+                  light: "rgba(217, 70, 239, 0.7)",
+                  dark: "rgba(232, 121, 249, 0.5)",
+                },
+                cyan: {
+                  light: "rgba(6, 182, 212, 0.7)",
+                  dark: "rgba(34, 211, 238, 0.5)",
+                },
+                rose: {
+                  light: "rgba(244, 63, 94, 0.7)",
+                  dark: "rgba(251, 113, 133, 0.5)",
+                },
+                amber: {
+                  light: "rgba(245, 158, 11, 0.7)",
+                  dark: "rgba(251, 191, 36, 0.5)",
+                },
+                indigo: {
+                  light: "rgba(99, 102, 241, 0.7)",
+                  dark: "rgba(129, 140, 248, 0.5)",
+                },
+                emerald: {
+                  light: "rgba(16, 185, 129, 0.7)",
+                  dark: "rgba(52, 211, 153, 0.5)",
+                },
+                pink: {
+                  light: "rgba(236, 72, 153, 0.7)",
+                  dark: "rgba(244, 114, 182, 0.5)",
+                },
+                blue: {
+                  light: "rgba(59, 130, 246, 0.7)",
+                  dark: "rgba(96, 165, 250, 0.5)",
+                },
+                purple: {
+                  light: "rgba(168, 85, 247, 0.7)",
+                  dark: "rgba(192, 132, 252, 0.5)",
+                },
+                teal: {
+                  light: "rgba(20, 184, 166, 0.7)",
+                  dark: "rgba(45, 212, 191, 0.5)",
+                },
+                orange: {
+                  light: "rgba(249, 115, 22, 0.7)",
+                  dark: "rgba(251, 146, 60, 0.5)",
+                },
+                sky: {
+                  light: "rgba(14, 165, 233, 0.7)",
+                  dark: "rgba(56, 189, 248, 0.5)",
+                },
+                lime: {
+                  light: "rgba(132, 204, 22, 0.7)",
+                  dark: "rgba(163, 230, 53, 0.5)",
+                },
+                red: {
+                  light: "rgba(239, 68, 68, 0.7)",
+                  dark: "rgba(248, 113, 113, 0.5)",
+                },
+                yellow: {
+                  light: "rgba(234, 179, 8, 0.7)",
+                  dark: "rgba(250, 204, 21, 0.5)",
+                },
+                green: {
+                  light: "rgba(34, 197, 94, 0.7)",
+                  dark: "rgba(74, 222, 128, 0.5)",
+                },
+              };
+
+              const bgColor = isDark
+                ? colors[dot.color]?.dark
+                : colors[dot.color]?.light;
+
+              return (
+                <div
+                  key={dot.id}
+                  onMouseDown={(e) => handleDotMouseDown(e, dot.id)}
+                  onTouchStart={(e) => handleDotMouseDown(e.touches[0], dot.id)}
+                  style={{
+                    position: "absolute",
+                    left: `${dot.px}%`,
+                    top: `${dot.py}%`,
+                    width: `${dot.size * 4}px`,
+                    height: `${dot.size * 4}px`,
+                    marginLeft: `-${dot.size * 2}px`,
+                    marginTop: `-${dot.size * 2}px`,
+                    backgroundColor: bgColor || "rgba(139, 92, 246, 0.7)",
+                    borderRadius: "50%",
+                    cursor: dot.isDragging ? "grabbing" : "grab",
+                    pointerEvents: "auto",
+                    transform: dot.isDragging ? "scale(1.1)" : "scale(1)",
+                    transition: "transform 0.2s ease",
+                    zIndex: 9999,
+                  }}
+                />
+              );
+            })
+          ) : (
             <div
-              key={dot.id}
-              onMouseDown={(e) => handleDotMouseDown(e, dot.id)}
-              onTouchStart={(e) => handleDotMouseDown(e.touches[0], dot.id)}
-              className={`absolute bg-${dot.color}-500/70 dark:bg-${
-                dot.color
-              }-400/50 rounded-full cursor-grab active:cursor-grabbing pointer-events-auto transition-shadow hover:shadow-lg hover:shadow-${
-                dot.color
-              }-500/50 ${dot.isDragging ? "scale-110" : ""} ${
-                dot.isReturning ? "animate-wiggle" : ""
-              }`}
               style={{
-                left: `${dot.px}%`,
-                top: `${dot.py}%`,
-                width: `${dot.size * 4}px`,
-                height: `${dot.size * 4}px`,
-                transform: "translate(-50%, -50%)",
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                color: "white",
+                fontSize: "20px",
               }}
-            />
-          ))}
+            >
+              Loading dots... ({dots.length})
+            </div>
+          )}
         </div>
 
-        <div className="absolute inset-0 opacity-60 dark:opacity-30">
+        <div className="absolute inset-0 opacity-60 dark:opacity-30 z-1">
           <div className="absolute bottom-0 left-0 right-0 h-64">
             <svg
               className="absolute bottom-0 w-full h-full"
