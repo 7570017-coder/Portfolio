@@ -5,6 +5,7 @@ export const useDotPhysics = (mounted, isMobile) => {
   const [dots, setDots] = useState([]);
   const dotsRef = useRef([]);
   const animationFrameRef = useRef(null);
+  const [isActivated, setIsActivated] = useState(false);
 
   // Initialize dots
   useEffect(() => {
@@ -19,6 +20,7 @@ export const useDotPhysics = (mounted, isMobile) => {
       isDragging: false,
       lastMoveTime: Date.now(),
       isReturning: false,
+      hasBeenMoved: false, // Track if dot has ever been moved
       returnStyle: ["spring", "spiral", "bounce", "float", "pulse"][
         Math.floor(Math.random() * 5)
       ],
@@ -45,6 +47,10 @@ export const useDotPhysics = (mounted, isMobile) => {
       const now = Date.now();
       const updated = dotsRef.current.map((dot) => {
         if (dot.isDragging) return dot;
+
+        // Skip physics if dot has never been moved (easter egg)
+        if (!dot.hasBeenMoved) return dot;
+
         let newDot = { ...dot };
         const timeSinceMove = now - dot.lastMoveTime;
 
@@ -177,13 +183,22 @@ export const useDotPhysics = (mounted, isMobile) => {
     const dot = dotsRef.current.find((d) => d.id === dotId);
     if (!dot) return;
 
+    // Activate physics for this dot (easter egg discovered!)
     const updated = dotsRef.current.map((d) =>
       d.id === dotId
-        ? { ...d, isDragging: true, vx: 0, vy: 0, isReturning: false }
+        ? {
+            ...d,
+            isDragging: true,
+            vx: 0,
+            vy: 0,
+            isReturning: false,
+            hasBeenMoved: true,
+          }
         : d
     );
     dotsRef.current = updated;
     setDots(updated);
+    setIsActivated(true);
 
     let lastClientX = e.clientX || (e.touches && e.touches[0].clientX);
     let lastClientY = e.clientY || (e.touches && e.touches[0].clientY);
@@ -222,7 +237,12 @@ export const useDotPhysics = (mounted, isMobile) => {
     const handleMouseUp = () => {
       const updatedUp = dotsRef.current.map((d) =>
         d.id === dotId
-          ? { ...d, isDragging: false, lastMoveTime: Date.now() }
+          ? {
+              ...d,
+              isDragging: false,
+              lastMoveTime: Date.now(),
+              hasBeenMoved: true,
+            }
           : d
       );
       dotsRef.current = updatedUp;
@@ -240,5 +260,5 @@ export const useDotPhysics = (mounted, isMobile) => {
     document.addEventListener("touchend", handleMouseUp);
   };
 
-  return { dots, handleDotMouseDown };
+  return { dots, handleDotMouseDown, isActivated };
 };
