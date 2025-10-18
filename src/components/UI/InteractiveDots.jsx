@@ -54,7 +54,10 @@ const InteractiveDots = ({
               cursor: dot.isDragging ? "grabbing" : "grab",
               pointerEvents: "auto",
               transform: dot.isDragging ? "scale(1.1)" : "scale(1)",
-              transition: "transform 0.2s ease",
+              transition: dot.hasBeenMoved
+                ? "transform 0.2s ease"
+                : "transform 0.2s ease, opacity 0.3s ease",
+              opacity: dot.hasBeenMoved ? 1 : 0.6,
               zIndex: 9999,
             }}
           />
